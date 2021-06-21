@@ -45,10 +45,52 @@ function buscarClima(e) {
 
     fetch(url)
     .then(respuesta => respuesta.json())
-    .then(datos => console.log(datos))
-    
+    .then(datos => {
+
+      // LIMPIAR EL HTML PREVIO
+      limpiarHtml()
+
+      if(datos.cod === '404'){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Disculpa, esta ciudad no se encuentra',
+          
+        })
+        return
+      }
+      mostrarClima(datos)
+    })
   }
 
+  function mostrarClima(datos){
+    const {main: {temp, temp_max, temp_min} } = datos;
+    
+    const centigados = kelvinACentigrados(temp);
+
+    const tempActual = document.createElement('div');
+    tempActual.style.color = "firebrick";
+    tempActual.style.fontSize = "80px"
+    tempActual.style.marginLeft = "120px"
+
+    tempActual.innerHTML = `${centigados} &#8451;`;
+    
+    const resultadodiv = document.createElement('div');
+    resultadodiv.appendChild(tempActual);
+
+    resultado.appendChild(resultadodiv)
+  } 
+
+  // CREAR FUNTION DE GRADOS KELVIS A CENTIGRADOS
+
+  const  kelvinACentigrados = grados => parseInt(grados - 273.15);
   
+
+  // FUNTION PARA LIMPIAR
+  function limpiarHtml(){
+    while(resultado.firstChild){
+      resultado.removeChild(resultado.firstChild);
+    }
+  }
 
 

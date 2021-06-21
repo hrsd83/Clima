@@ -1,7 +1,21 @@
-html {
+/* html {
   background-image: linear-gradient(to right, #434343 0%, black 100%);
+} */
+
+body{
+  background: url(../img/clima4.jpg) ;
+  background-size: 100%;
+  height: 100vh;
+  
 }
 
+.container #titulo{
+  font-size: 60px;
+}
+
+.p-6 p{
+  font-size: 25px;
+}
 
 .sk-fading-circle {
   margin: 100px auto;
@@ -129,6 +143,8 @@ html {
           animation-delay: -0.1s;
 }
 
+
+
 @-webkit-keyframes sk-circleFadeDelay {
   0%, 39%, 100% { opacity: 0; }
   40% { opacity: 1; }
@@ -138,3 +154,4 @@ html {
   0%, 39%, 100% { opacity: 0; }
   40% { opacity: 1; } 
 }
+
