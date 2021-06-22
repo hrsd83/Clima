@@ -43,10 +43,12 @@ function buscarClima(e) {
 
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad},${pais}&appid=${appId}`
 
+    spinner();// MUESTRA EL SPINNER DE CARGA
+    
     fetch(url)
     .then(respuesta => respuesta.json())
     .then(datos => {
-
+      console.log(datos);
       // LIMPIAR EL HTML PREVIO
       limpiarHtml()
 
@@ -64,19 +66,47 @@ function buscarClima(e) {
   }
 
   function mostrarClima(datos){
-    const {main: {temp, temp_max, temp_min} } = datos;
+    const {name, main: {temp, temp_max, temp_min} } = datos;
     
     const centigados = kelvinACentigrados(temp);
+    const max = kelvinACentigrados(temp_max);
+    const min = kelvinACentigrados(temp_min);
 
+    // SCRIPT DEL PAIS A CONSULTAR
+
+    const nombreCiudad = document.createElement('p');
+    nombreCiudad.innerHTML = `Clima en ${name}`;
+    nombreCiudad.style.color = "firebrick";
+    nombreCiudad.style.fontSize = "50px"
+    nombreCiudad.style.textAlign ='center';
+
+    // SCRIPT DE TEMPERATURA ACTUAL
     const tempActual = document.createElement('div');
     tempActual.style.color = "firebrick";
-    tempActual.style.fontSize = "80px"
-    tempActual.style.marginLeft = "120px"
-
+    tempActual.style.fontSize = "100px"
+    tempActual.style.textAlign ='center';
     tempActual.innerHTML = `${centigados} &#8451;`;
     
+    // SCRIPT DE TEMPERATURA MAX
+    const tempMaxima = document.createElement('p');
+    tempMaxima.innerHTML= `Max: ${max}  &#8451`;
+    tempMaxima.style.color = "firebrick";
+    tempMaxima.style.fontSize = "40px";
+    tempMaxima.style.textAlign = 'center';
+    
+    
+    // SCRIPT DE TEMPERATURA MIN
+    const tempMinima = document.createElement('p');
+    tempMinima.innerHTML= `Min: ${min}  &#8451`;
+    tempMinima.style.color = "firebrick";
+    tempMinima.style.fontSize = "40px"
+    tempMinima.style.textAlign = 'center';
+    
     const resultadodiv = document.createElement('div');
+    resultadodiv.appendChild(nombreCiudad);
     resultadodiv.appendChild(tempActual);
+    resultadodiv.appendChild(tempMaxima);
+    resultadodiv.appendChild(tempMinima);
 
     resultado.appendChild(resultadodiv)
   } 
@@ -92,5 +122,30 @@ function buscarClima(e) {
       resultado.removeChild(resultado.firstChild);
     }
   }
+ 
+  function spinner(){
+    
+    limpiarHtml();
+    
+    const divSpinner = document.createElement('div');
+    divSpinner.classList.add('sk-chase');
+    divSpinner.style.marginLeft = '200px';
+    divSpinner.style.width = '100px';
+    divSpinner.style.height = '100px'; 
+    
+    divSpinner.innerHTML = `
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+    `;
+    
+    resultado.appendChild(divSpinner);
+  }
+  
+  
+  
 
 
