@@ -4,9 +4,8 @@
 
 body{
   background: url(../img/clima4.jpg) ;
-  background-size: 100%;
-  height: 100vh;
-  
+  width: 100%;
+  height:100%;
 }
 
 .container #titulo{
